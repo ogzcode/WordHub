@@ -14,7 +14,7 @@
                     <td class="rounded-l">{{ word.word.word }}</td>
                     <td class="">{{ word.turkish }}</td>
                     <td class="">
-                        <button class="btn-details relative bg-slate-50/10 p-2 rounded transition left-2 hover:bg-slate-50/20">
+                        <button @click="showDetails(word.id)" class="btn-details relative bg-slate-50/10 p-2 rounded transition left-2 hover:bg-slate-50/20">
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" class="bi bi-eye-fill fill-white"
                                 viewBox="0 0 16 16">
                                 <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
@@ -45,13 +45,32 @@
             </tbody>
         </table>
     </div>
+    <ModalLayout :show-modal="showModal" @on-close="handleModal" slot-name="word-details" :is-save-disabled="true" title="Word Details">
+        <template v-slot:word-details>
+            <WordDetails :id="seledtedId"></WordDetails>
+        </template>
+    </ModalLayout>
 </template>
 
 <script setup>
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import { useWordStore } from "../store/word.js";
+import ModalLayout from "./modals/ModalLayout.vue";
+import WordDetails from "./WordDetails.vue";
 
 const wordStore = useWordStore();
+
+const showModal = ref(false);
+const seledtedId = ref(null);
+
+const showDetails = (id) => {
+    seledtedId.value = id;
+    handleModal(true);
+}
+
+const handleModal = (value) => {
+    showModal.value = value;
+}
 
 onMounted(() => {
     wordStore.getWordList();

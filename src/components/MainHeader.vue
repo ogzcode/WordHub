@@ -12,7 +12,7 @@
             class="outline-0 rounded pl-4 w-1/4 bg-transparent text-white border border-slate-700 transition placeholder:text-slate-600 focus:border-slate-500"
             type="text" placeholder="Search" />
     </header>
-    <ModalLayout :show-modal="showModal" @on-close="handleModal" @on-save="save" slot-name="body">
+    <ModalLayout :show-modal="showModal" @on-close="handleModal" @on-save="save" slot-name="body" title="Add Word">
         <template v-slot:body>
             <AddForm></AddForm>
         </template>

@@ -38,6 +38,16 @@ export const useWordStore = defineStore("word", () => {
         }
     };
 
+    const getWordDetails = (id) => {
+        const selectedWord =  wordList.value.find((word) => {
+            return word.id === id;
+        });
+
+        console.log(selectedWord.word.meanings);
+
+        return selectedWord.word.meanings;
+    };
+
     watch(filterText, () => {
         filterWordList();
     });
@@ -88,6 +98,7 @@ export const useWordStore = defineStore("word", () => {
         deleteDef,
         setTurkishWord,
         setNewWord,
+        getWordDetails,
         getWordList,
         insertWord
     };

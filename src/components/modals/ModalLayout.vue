@@ -3,7 +3,7 @@
         <div class="modal-dialog modal-center">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3 class="modal-title">Add New Word</h3>
+                    <h3 class="modal-title">{{ title }}</h3>
                     <button type="button" class="btn-close" @click="onClose">
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="" class="bi bi-x-lg"
                             viewBox="0 0 16 16">
@@ -19,7 +19,7 @@
                     <button type="button" class="btn btn-secondary" @click="onClose">
                         Close
                     </button>
-                    <button @click="onSave" type="button" class="btn btn-primary">
+                    <button v-if="!isSaveDisabled" @click="onSave" type="button" class="btn btn-primary">
                         Save changes
                     </button>
                 </div>
@@ -34,8 +34,13 @@ import { defineProps, defineEmits } from 'vue';
 const emit = defineEmits(["onClose", "onSave"]);
 
 const props = defineProps({
+    title: String,
     showModal: Boolean,
-    slotName: String
+    slotName: String,
+    isSaveDisabled: {
+        type: Boolean,
+        default: false
+    }
 });
 
 const handleClickModal = (e) => {
@@ -126,8 +131,8 @@ const onSave = () => {
     transition: all .3s ease-in-out;
 }
 
-.btn:first-child {
-    margin-right: 16px;
+.btn:last-child {
+    margin-left: 16px;
 }
 
 .btn-primary {
