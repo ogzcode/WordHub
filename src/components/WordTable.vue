@@ -10,9 +10,9 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(word, index) in wordList" :key="index" class="body-row bg-slate-50/10">
+                <tr v-for="(word, index) in wordStore.filterWordList()" :key="index" class="body-row bg-slate-50/10">
                     <td class="rounded-l">{{ word.word.word }}</td>
-                    <td class="">Turkish</td>
+                    <td class="">{{ word.turkish }}</td>
                     <td class="">
                         <button class="btn-details relative bg-slate-50/10 p-2 rounded transition left-2 hover:bg-slate-50/20">
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" class="bi bi-eye-fill fill-white"
@@ -48,16 +48,13 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
-import { storeToRefs } from "pinia";
+import { onMounted } from "vue";
 import { useWordStore } from "../store/word.js";
 
 const wordStore = useWordStore();
-const { wordList } = storeToRefs(wordStore);
 
 onMounted(() => {
     wordStore.getWordList();
-    console.log(wordList.value);
 });
 </script>
 

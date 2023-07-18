@@ -1,12 +1,17 @@
 import { defineStore } from "pinia";
 import { supabase } from "../supabase.js";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 
 export const useWordStore = defineStore("word", () => {
     const wordList = ref([]);
     const word = ref(null);
     const newWord = ref(null);
     const turkishWord = ref(null);
+    const filterText = ref(null);
+
+    const setFilterText = (text) => {
+        filterText.value = text;
+    };    
 
     const setTurkishWord = (word) => {
         turkishWord.value = word;
@@ -22,6 +27,21 @@ export const useWordStore = defineStore("word", () => {
         newWord.value = updatedWord;
     }
 
+    const filterWordList = () => {
+        if (filterText.value) {
+            return wordList.value.filter((word) => {
+                return word.word.word.toLowerCase().includes(filterText.value.toLowerCase());
+            });
+        }
+        else {
+            return wordList.value;
+        }
+    };
+
+    watch(filterText, () => {
+        filterWordList();
+    });
+
     async function getWordList() {
         try {
             const { data, error } = await supabase.from("word").select("*");
@@ -29,7 +49,6 @@ export const useWordStore = defineStore("word", () => {
             if (error) throw error;
 
             wordList.value = data;
-            console.log(wordList.value);
         }
         catch (error) {
             throw error;
@@ -63,6 +82,9 @@ export const useWordStore = defineStore("word", () => {
         word,
         newWord,
         turkishWord,
+        filterText,
+        setFilterText,
+        filterWordList,
         deleteDef,
         setTurkishWord,
         setNewWord,

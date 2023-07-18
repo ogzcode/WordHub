@@ -13,13 +13,13 @@
                     </button>
                 </div>
                 <div class="modal-body scrollable">
-                    <slot name="body"></slot>
+                    <slot :name="slotName"></slot>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" @click="onClose">
                         Close
                     </button>
-                    <button @click="save" type="button" class="btn btn-primary">
+                    <button @click="onSave" type="button" class="btn btn-primary">
                         Save changes
                     </button>
                 </div>
@@ -29,20 +29,13 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits, ref } from 'vue';
-import { useWordStore } from "../../store/word.js";
-import { useAuthStore } from "../../store/auth.js";
-import { storeToRefs } from 'pinia';
+import { defineProps, defineEmits } from 'vue';
 
-const emit = defineEmits(["onClose"]);
-
-const wordStore = useWordStore();
-const authStore = useAuthStore();
-
-const { session } = storeToRefs(authStore);
+const emit = defineEmits(["onClose", "onSave"]);
 
 const props = defineProps({
-    showModal: Boolean
+    showModal: Boolean,
+    slotName: String
 });
 
 const handleClickModal = (e) => {
@@ -55,9 +48,8 @@ const onClose = () => {
     emit("onClose", false);
 }
 
-const save = () => {
-    wordStore.insertWord(session.value?.user?.id);
-    onClose(false);
+const onSave = () => {
+    emit("onSave");
 }
 
 </script>
