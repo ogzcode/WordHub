@@ -42,9 +42,6 @@ export const useWordStore = defineStore("word", () => {
         const selectedWord =  wordList.value.find((word) => {
             return word.id === id;
         });
-
-        console.log(selectedWord.word.meanings);
-
         return selectedWord.word.meanings;
     };
 
@@ -87,6 +84,20 @@ export const useWordStore = defineStore("word", () => {
             throw error;
         }
     }
+
+    async function deleteWord(id) {
+        try {
+            const { data, error } = await supabase.from("word").delete().match({ id: id });
+
+            if (error) throw error;
+
+            getWordList();
+        }
+        catch (error) {
+            throw error;
+        }
+    }
+
     return {
         wordList,
         word,
@@ -100,6 +111,7 @@ export const useWordStore = defineStore("word", () => {
         setNewWord,
         getWordDetails,
         getWordList,
-        insertWord
+        insertWord,
+        deleteWord,
     };
 });
