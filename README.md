@@ -1,7 +1,17 @@
-# Vue 3 + Vite
+# Dictionary App
+Vue.js ve Supabase kullanarak geliştirdiğim ingilizce kelimeleri yönetebileceğiniz bir uygulama.<br>
+Bu uygulamada temel hedefim İngilizce kelimeleri https://dictionaryapi.dev/ API si aracılığı ile anlamlarını,örnek cümleleri Supabase veritabanına kayıt etmek ve yönetebilmektir.
+> Kişisel kullanım için geliştirdiğim bir uygulama.
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+## Kullandığım Teknolojiler
+* Vue.js
+* Pinia
+* vue-router
+* Tailwind
+* Supabase
 
-## Recommended IDE Setup
-
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+### Ekran Görüntüleri
+![Ekran Görüntüsü Açıklaması](./public/screenshot/login.png)
+![Ekran Görüntüsü Açıklaması](./public/screenshot/main.png)
+![Ekran Görüntüsü Açıklaması](./public/screenshot/add-word.png)
+![Ekran Görüntüsü Açıklaması](./public/screenshot/details.png)
