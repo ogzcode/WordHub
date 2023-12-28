@@ -7,12 +7,33 @@ const routes = [
         path: '/',
         name: 'Dashboard',
         component: () => import('../views/Dashboard.vue'),
-        meta: { requiresAuth: true }
+        meta: { requiresAuth: true },
+        children: [
+            {
+                path: "",
+                name: "AdminHome",
+                redirect: { name: "Home" },
+                meta: {
+                    requiresAuth: true,
+                },
+            },
+            {
+                path: 'dashboard',
+                name: 'Home',
+                component: () => import('../views/main/dashboard/Dashboard.vue'),
+                meta: { requiresAuth: true },
+            },
+        ]
     },
     {
         path: '/login',
         name: 'Login',
-        component: () => import('../views/Login.vue')
+        component: () => import('../views/auth/Login.vue')
+    },
+    {
+        path: '/signup',
+        name: 'Signup',
+        component: () => import('../views/auth/SignUp.vue')
     },
     {
         path: "/:pathMatch(.*)*",
@@ -34,17 +55,15 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
     const store = useAuthStore();
 
-    const user = store.session?.user;
+    const user = store.session
     const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
 
     if (requiresAuth && !user) {
-        next('/login')
-    }
-    else if (!requiresAuth && user) {
-        next('/')
-    }
-    else {
-        next()
+        next('/login');
+    } else if (user && to.name === 'Login' || user && to.name === 'Signup') {
+        next('/');
+    } else {
+        next();
     }
 })
 
