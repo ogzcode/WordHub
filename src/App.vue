@@ -1,28 +1,34 @@
 <template>
-  <router-view />
+  <div class="relative">
+    <router-view />
+    <Toast />
+  </div>
 </template>
 
 <script setup>
 import { supabase } from "./supabase.js";
 import { ref, onMounted } from "vue";
 import { useAuthStore } from "./store/auth.js";
+import { useRouter } from "vue-router";
+import Toast from "./components/Toast.vue";
 
 const store = useAuthStore();
+const router = useRouter();
 
 onMounted(() => {
   supabase.auth.onAuthStateChange((_, _session) => {
     store.setSession(_session);
-  })
+    store.setUser(_session?.user);
 
-  supabase.auth.getSession().then((session) => {
-    store.setSession(session.data);
+    if (_session?.user) {
+      router.push("/dashboard");
+    }
+    else {
+      router.push("/login");
+    }
   })
 })
 
-/*
-Aktif link ler için stil değiştirilecek
-
-*/
 </script>
 
 

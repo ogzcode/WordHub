@@ -6,7 +6,7 @@ export const useAuthStore = defineStore("auth", () => {
     const session = ref(null);
 
     const setSession = (newSession) => {
-        session.value = newSession.session;
+        session.value = newSession?.session;
         user.value = newSession?.user;
     };
 

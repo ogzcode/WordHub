@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { supabase } from '../supabase.js'
 import { useAuthStore } from '../store/auth.js'
 
 const routes = [
@@ -23,6 +22,14 @@ const routes = [
                 component: () => import('../views/main/dashboard/Dashboard.vue'),
                 meta: { requiresAuth: true },
             },
+            {
+                path: "saved",
+                name: "Saved",
+                component: () => import('../views/main/saved/Saved.vue'),
+                meta: {
+                    requiresAuth: true,
+                },
+            }
         ]
     },
     {
@@ -55,7 +62,7 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
     const store = useAuthStore();
 
-    const user = store.session
+    const user = store.user
     const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
 
     if (requiresAuth && !user) {
