@@ -1,9 +1,9 @@
 <template>
-    <nav class="w-[320px] bg-white min-h-screen md:relative absolute z-20 border-r border-slate-200" :class="{ 'closed': !show}">
+    <nav class="w-[360px] bg-white min-h-screen md:relative absolute z-20 border-r border-slate-200" :class="{ 'closed': !show}">
         <h1 class="text-rose-600 mb-8 h-[72px] flex items-center px-6 text-3xl font-bold border-b border-slate-200">Logo</h1>
         <ul class="px-6">
             <Link to="/" label="Dashboard" />
-            <Link to="/words" label="Words" />
+            <Link to="/saved" label="Saved Words" />
             <Link to="/settings" label="Settings" />
         </ul>
         <button
@@ -16,7 +16,7 @@
             </svg>
         </button>
         <div class="absolute bottom-8 w-full px-6">
-            <button class="border border-rose-600 rounded text-rose-600 py-2 w-full flex gap-x-2 justify-center items-center">
+            <button @click="handleLogout" class="border border-rose-600 rounded text-rose-600 py-2 w-full flex gap-x-2 justify-center items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
                     class="bi bi-box-arrow-right" viewBox="0 0 16 16">
                     <path fill-rule="evenodd"
@@ -33,6 +33,7 @@
 <script setup>
 import { ref } from 'vue';
 import Link from './components/Link.vue';
+import { logout } from '../../services/api/auth';
 
 const show = ref(true);
 
@@ -49,6 +50,16 @@ window.addEventListener('resize', () => {
         show.value = false;
     }
 })
+
+const handleLogout = () => {
+    logout()
+        .then((res) => {
+            console.log(res);
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+}
 
 </script>
 
