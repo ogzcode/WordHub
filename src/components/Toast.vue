@@ -2,7 +2,7 @@
     <transition name="toast-slide" mode="out-in">
         <div class="fixed top-8 right-8 min-w-[320px] rounded flex items-center gap-x-4 py-4 px-6 shadow-lg"
             v-if="toastStore.show" :class="toastStore.getToastStyle()">
-            <div class="text-white">
+            <div class="">
 
                 <svg v-if="toastStore.type === 'success'" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                     fill="currentColor" class="bi bi-check-square-fill" viewBox="0 0 16 16">
@@ -26,7 +26,7 @@
                         d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm2.5 7.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1 0-1z" />
                 </svg>
             </div>
-            <p class="text-white text-base">{{ toastStore.message }}</p>
+            <p class="text-base">{{ toastStore.message }}</p>
         </div>
     </transition>
 </template>
