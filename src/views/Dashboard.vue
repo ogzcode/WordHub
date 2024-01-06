@@ -1,16 +1,15 @@
 <template>
-    <div class="bg-slate-800 min-h-screen overflow-hidden">
-        <Navbar/>
-        <MainHeader/>
-        <WordTable/>
+    <div class="bg-white min-h-screen overflow-hidden flex">
+        <SideNav />
+        <router-view />
     </div>
 </template>
 
 <script setup>
-import Navbar from "../components/Navbar.vue";
-import MainHeader from "../components/MainHeader.vue";
-import WordTable from "../components/WordTable.vue";
+import { useAuthStore } from "../store/auth";
+import SideNav from "./sidenav/SideNav.vue";
 
 </script>
 
-<style scoped></style>
+<style scoped>
+</style>
