@@ -1,117 +1,97 @@
 import { defineStore } from "pinia";
 import { supabase } from "../supabase.js";
-import { ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
+import { getWords, createWord, deleteWord, updateSentencesByWordId } from "../services/api/word.js";
+import { useToastStore } from "./toast.js";
 
 export const useWordStore = defineStore("word", () => {
+    const toastStore = useToastStore();
     const wordList = ref([]);
-    const word = ref(null);
-    const newWord = ref(null);
-    const turkishWord = ref(null);
-    const filterText = ref(null);
+    const selectedWordId = ref(null);
+    const selectedWordSentences = ref([]);
 
-    const setFilterText = (text) => {
-        filterText.value = text;
-    };    
-
-    const setTurkishWord = (word) => {
-        turkishWord.value = word;
-    };
-
-    const setNewWord = (word) => {
-        newWord.value = word;
-    };
-
-    const deleteDef = (meaningIndex, defIndex) => {
-        const updatedWord = { ...newWord.value };
-        updatedWord.meanings[meaningIndex].definitions.splice(defIndex, 1);
-        newWord.value = updatedWord;
+    const setSelectedWordId = (wordId) => {
+        selectedWordId.value = wordId;
     }
 
-    const filterWordList = () => {
-        if (filterText.value) {
-            return wordList.value.filter((word) => {
-                return word.word.word.toLowerCase().includes(filterText.value.toLowerCase());
-            });
+    watch(selectedWordId, (newVal) => {
+        if (newVal) {
+            selectedWordSentences.value = getSelectedWordSentences();
         }
-        else {
-            return wordList.value;
-        }
-    };
-
-    const getWordDetails = (id) => {
-        const selectedWord =  wordList.value.find((word) => {
-            return word.id === id;
-        });
-        return selectedWord.word.meanings;
-    };
-
-    watch(filterText, () => {
-        filterWordList();
     });
 
-    async function getWordList() {
-        try {
-            const { data, error } = await supabase.from("word").select("*");
-
-            if (error) throw error;
-
-            wordList.value = data;
-        }
-        catch (error) {
-            throw error;
-        }
+    const fetchAllWords = () => {
+        getWords()
+            .then((res) => {
+                //toastStore.showToast("success", "Words fetched successfully");
+                wordList.value = res.data;
+            })
+            .catch((err) => {
+                console.log(err);
+                toastStore.showToast("error", "Failed to fetch words");
+            });
     }
 
-    async function insertWord(user_id) {
-        try {
-            const { data, error } = await supabase.from("word").insert(
-                {
-                    word: newWord.value,
-                    turkish: turkishWord.value,
-                    user_id: user_id,
-                }
-            );
-
-            if (error) throw error;
-
-            newWord.value = null;
-            turkishWord.value = null;
-            word.value = null;
-
-            getWordList();
-        }
-        catch (error) {
-            throw error;
-        }
+    const createNewWord = (wordData) => {
+        createWord(wordData)
+            .then((res) => {
+                toastStore.showToast("success", "Word created successfully");
+            })
+            .catch((err) => {
+                console.log(err);
+                toastStore.showToast("error", "Failed to create word");
+            });
     }
 
-    async function deleteWord(id) {
-        try {
-            const { data, error } = await supabase.from("word").delete().match({ id: id });
-
-            if (error) throw error;
-
-            getWordList();
-        }
-        catch (error) {
-            throw error;
-        }
+    const updateSentences = (sentences) => {
+        updateSentencesByWordId(selectedWordId.value, sentences)
+            .then((res) => {
+                wordList.value = wordList.value.map((word) => {
+                    if (word.id === selectedWordId.value) {
+                        word.sentences = sentences;
+                    }
+                    return word;
+                });
+                selectedWordSentences.value = sentences;
+                //toastStore.showToast("success", "Sentences updated successfully");
+            })
+            .catch((err) => {
+                console.log(err);
+                toastStore.showToast("error", "Failed to update sentences");
+            });
     }
+
+    const deleteWordById = (wordId) => {
+        deleteWord(wordId)
+            .then((res) => {
+                wordList.value = wordList.value.filter((word) => word.id !== wordId);
+                toastStore.showToast("success", "Word deleted successfully");
+            })
+            .catch((err) => {
+                console.log(err);
+                toastStore.showToast("error", "Failed to delete word");
+            });
+    }
+
+    const getSelectedWordSentences = () => {
+        const selectedWord = wordList.value.find((word) => word.id === selectedWordId.value);
+        return selectedWord ? selectedWord.sentences : [];
+    }
+
+    const getSelectedWordDetails = computed(() => {
+        return wordList.value.find((word) => word.id === selectedWordId.value).details;
+    });
 
     return {
         wordList,
-        word,
-        newWord,
-        turkishWord,
-        filterText,
-        setFilterText,
-        filterWordList,
-        deleteDef,
-        setTurkishWord,
-        setNewWord,
-        getWordDetails,
-        getWordList,
-        insertWord,
-        deleteWord,
+        selectedWordId,
+        getSelectedWordDetails,
+        selectedWordSentences,
+        fetchAllWords,
+        createNewWord,
+        updateSentences,
+        deleteWordById,
+        setSelectedWordId,
+        getSelectedWordSentences,
     };
 });
