@@ -1,9 +1,10 @@
 <template>
-    <div class="p-8 flex flex-wrap gap-8 overflow-y-auto word-container ">
-        <div class="border border-zinc-300 rounded-md min-w-[320px] p-4" v-for="(word, i) in wordStore.wordList" :key="i">
-            <div class="flex items-center justify-between gap-x-4">
-                <div class="flex items-end gap-x-4">
-                    <h1 class="text-3xl font-semibold text-slate-700 leading-none">{{ word.word }}</h1>
+    <div class="p-12 flex flex-wrap gap-12 justify-around">
+        <div class="flex justify-center px-6 flex-col border border-zinc-300 rounded-md min-w-[360px] h-[160px]"
+            v-for="(word, i) in wordStore.dataToDisplay" :key="i">
+            <div class="flex items-center justify-between gap-x-4 w-full">
+                <div class="flex items-start flex-col gap-y-1">
+                    <h1 class="text-2xl font-semibold text-slate-700 leading-none">{{ word.word }}</h1>
                     <p class="text-sm text-slate-600 italic">{{ word.phonetics.text }}</p>
                 </div>
                 <div class="flex items-center gap-x-2">
@@ -50,7 +51,4 @@ const handleShowDialog = (value, id = null, body = null) => {
 </script>
 
 <style scoped>
-.word-container {
-    height: calc(100vh - 72px);
-}
 </style>

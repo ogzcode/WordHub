@@ -9,9 +9,50 @@ export const useWordStore = defineStore("word", () => {
     const wordList = ref([]);
     const selectedWordId = ref(null);
     const selectedWordSentences = ref([]);
+    const searchQuery = ref("");
+    const page = ref(1);
+    const loading = ref(true);
+    
+    const pageActionIsDisabled = (action) => {
+        if (action === "next") {
+            return page.value >= wordList.value.length / 12;
+        } else if (action === "prev") {
+            return page.value <= 1;
+        }
+    }
+
+
+    const handleNextPage = () => {
+        if (page.value < wordList.value.length / 12) {
+            page.value++;
+        }
+    }
+
+    const handlePrevPage = () => {
+        if (page.value > 1) {
+            page.value--;
+        }
+    }
+
+    const dataToDisplay = computed(() => {
+        if (!wordList.value.length) return [];
+
+        const start = (page.value - 1) * 12;
+        const end = page.value * 12;
+        
+        const filteredWords = wordList.value.filter((word) => {
+            return word.word.toLowerCase().includes(searchQuery.value.toLowerCase());
+        });
+
+        return filteredWords.slice(start, end);
+    });
 
     const setSelectedWordId = (wordId) => {
         selectedWordId.value = wordId;
+    }
+
+    const setSearchQuery = (query) => {
+        searchQuery.value = query;
     }
 
     watch(selectedWordId, (newVal) => {
@@ -23,8 +64,8 @@ export const useWordStore = defineStore("word", () => {
     const fetchAllWords = () => {
         getWords()
             .then((res) => {
-                //toastStore.showToast("success", "Words fetched successfully");
                 wordList.value = res.data;
+                loading.value = false;
             })
             .catch((err) => {
                 console.log(err);
@@ -87,11 +128,19 @@ export const useWordStore = defineStore("word", () => {
         selectedWordId,
         getSelectedWordDetails,
         selectedWordSentences,
+        searchQuery,
+        dataToDisplay,
+        page,
+        loading,
+        handleNextPage,
+        handlePrevPage,
+        setSearchQuery,
         fetchAllWords,
         createNewWord,
         updateSentences,
         deleteWordById,
         setSelectedWordId,
         getSelectedWordSentences,
+        pageActionIsDisabled,
     };
 });
