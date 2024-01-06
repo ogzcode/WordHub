@@ -1,8 +1,8 @@
 <template>
     <div class="h-[72px] border-b border-slate-200 flex items-center justify-between px-6">
-        <h1 class="text-2xl text-slate-800 font-semibold">Dashboard</h1>
+        <h1 class="text-2xl text-slate-800 font-semibold">{{ props.headerTitle }}</h1>
         <div class="relative">
-            <input placeholder="Search New Word" type="text"
+            <input :placeholder="props.inputPlaceholder" type="text"
                 class="border-rose-400 border text-base px-6 py-2 outline-none rounded-full w-[360px] text-zinc-700"
                 :value="props.searchValue" @input="handleChange" @keyup.enter="$emit('onKeyEnter')"    
             />
@@ -18,6 +18,14 @@
 <script setup>
 const props = defineProps({
     searchValue: {
+        type: String,
+        default: '',
+    },
+    headerTitle: {
+        type: String,
+        default: '',
+    },
+    inputPlaceholder: {
         type: String,
         default: '',
     },

@@ -1,6 +1,6 @@
 <template>
     <div class="bg-white min-h-screen w-full">
-        <Header :search-value="search" v-model:update-search-value="search" @on-key-enter="handleSearch" />
+        <Header header-title="Dashboard" input-placeholder="Search new word..." :search-value="search" v-model:update-search-value="search" @on-key-enter="handleSearch" />
         <div class="p-8 flex flex-col word-container">
             <template v-if="searchResult">
                 <WordData :data="searchResult" />

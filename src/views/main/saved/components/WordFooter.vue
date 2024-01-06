@@ -1,5 +1,5 @@
 <template>
-    <div class="mt-8 flex gap-x-4">
+    <div class="mt-8 flex gap-x-4 w-full">
         <button @click="$emit('onShowDialog', true, props.wordId, 'example')"
             class="flex-1 flex justify-center items-center gap-x-4 border rounded py-2 text-indigo-500 border-indigo-400 transition active:border-indigo-600">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-vector-pen"
