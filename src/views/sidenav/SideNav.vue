@@ -4,7 +4,8 @@
         <ul class="px-6">
             <Link to="/" label="Dashboard" />
             <Link to="/saved" label="Saved Words" />
-            <Link to="/settings" label="Settings" />
+            <Link to="/guessing" label="Guessing Game" />
+            <Link to="/hunt" label="Word Hunting" />
         </ul>
         <button
             @click="toggle"
