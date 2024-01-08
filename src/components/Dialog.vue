@@ -21,7 +21,7 @@
                         class="tracking-wide font-normal text-sm px-3 py-1 border border-slate-400 text-slate-800 rounded mr-2"
                         @click="handleClose">{{ props.cancelText }}</button>
                     <button v-if="props.submitShow"
-                        class="tracking-wide text-sm px-3 py-1 rounded disabled:opacity-60 disabled:cursor-not-allowed"
+                        class="text-sm px-3 font-semibold py-1 rounded disabled:opacity-60 disabled:cursor-not-allowed"
                         :class="[buttonType[props.submitType]]" @click="props.onSubmit" :disabled="submitIsDisabled">
                         {{ props.submitText }}
                     </button>
@@ -40,7 +40,7 @@ const buttonType = {
     secondary: 'bg-slate-800 text-white',
     danger: 'bg-red-700 text-white',
     warning: 'bg-yellow-700 text-white',
-    success: 'bg-emerald-600 text-white',
+    success: 'bg-emerald-500 text-white',
     info: 'bg-sky-700 text-white',
     light: 'bg-white text-slate-800',
     dark: 'bg-slate-800 text-white',

@@ -29,6 +29,22 @@ const routes = [
                 meta: {
                     requiresAuth: true,
                 },
+            },
+            {
+                path: "guessing",
+                name: "Guessing",
+                component: () => import('../views/games/guessing/Game.vue'),
+                meta: {
+                    requiresAuth: true,
+                },
+            },
+            {
+                path: "hunt",
+                name: "Hunt",
+                component: () => import('../views/games/hunt/Game.vue'),
+                meta: {
+                    requiresAuth: true,
+                },
             }
         ]
     },
@@ -68,7 +84,7 @@ router.beforeEach(async (to, from, next) => {
     if (requiresAuth && !user) {
         next('/login');
     } else if (user && to.name === 'Login' || user && to.name === 'Signup') {
-        next('/');
+        next('/dashboard');
     } else {
         next();
     }
