@@ -47,7 +47,31 @@ const updateSentencesByWordId = async (id, sentences) => {
         .eq("id", id);
 }
 
+const getTotalWords = async () => {
+    return await supabase
+        .from("words")
+        .select("id", { count: "exact", head: true });
+}
 
+const getTotalSentences = async () => {
+    return await supabase
+        .from("words")
+        .select("sentences");
+}
+
+const getWordsLastWeek = async () => {
+    const currentDate = new Date();
+    const sevenDaysAgo = new Date(currentDate);
+    sevenDaysAgo.setDate(currentDate.getDate() - 7);
+
+    const isoFormattedStartDate = sevenDaysAgo.toISOString();
+    const isoFormattedEndDate = currentDate.toISOString();
+    return await supabase
+        .from("words")
+        .select("*")
+        .gte("created_at", isoFormattedStartDate)
+        .lte("created_at", isoFormattedEndDate);
+}
 
 
 export {
@@ -57,5 +81,8 @@ export {
     createWord,
     updateWord,
     deleteWord,
-    updateSentencesByWordId
+    updateSentencesByWordId,
+    getTotalWords,
+    getTotalSentences,
+    getWordsLastWeek
 };
