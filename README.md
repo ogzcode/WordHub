@@ -40,32 +40,8 @@ Uygulamayı yerel olarak çalıştırmak için şu adımları takip edin:
 Uygulama, [http://localhost:5173](http://localhost:5173) adresinde çalışacaktır.
 
 
-### Ekran Görüntüleri
-#### Auth
-![Ekran Görüntüsü Açıklaması](./public/screenshot/auth.png)
-#### Dashboard Main
-![Ekran Görüntüsü Açıklaması](./public/screenshot/dashboard-1.png)
-#### Dashboard Search
-![Ekran Görüntüsü Açıklaması](./public/screenshot/dashboard-2.png)
-#### Saved Main
-![Ekran Görüntüsü Açıklaması](./public/screenshot/saved-main.png)
-#### Saved Word Details
-![Ekran Görüntüsü Açıklaması](./public/screenshot/saved-details.png)
-#### Saved Word Example
-![Ekran Görüntüsü Açıklaması](./public/screenshot/saved-example.png)
-
-<hr></hr>
-
-### Games
-
-#### Word Jumble Main
-![Ekran Görüntüsü Açıklaması](./public/screenshot/jumble-main.png)
-#### Word Jumble Game
-![Ekran Görüntüsü Açıklaması](./public/screenshot/jumble-game.png)
-#### Word Hunting Main
-![Ekran Görüntüsü Açıklaması](./public/screenshot/hunting-main.png)
-#### Word Hunting Game
-![Ekran Görüntüsü Açıklaması](./public/screenshot/hunting-game.png)
+### Video
+[Youtube Video](https://youtu.be/EgX7FH6egRY?si=yAnn-qgdQFmTzd2O)
 
 ## Lisans
 
