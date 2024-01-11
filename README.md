@@ -1,17 +1,72 @@
-# Dictionary App
-Vue.js ve Supabase kullanarak geliştirdiğim ingilizce kelimeleri yönetebileceğiniz bir uygulama.<br>
-Bu uygulamada temel hedefim İngilizce kelimeleri https://dictionaryapi.dev/ API si aracılığı ile anlamlarını,örnek cümleleri Supabase veritabanına kayıt etmek ve yönetebilmektir.
-> Kişisel kullanım için geliştirdiğim bir uygulama.
+# WordHUB APP
 
-## Kullandığım Teknolojiler
-* Vue.js
-* Pinia
-* vue-router
-* Tailwind
-* Supabase
+WordHUB App, Vue.js ve Supabase kullanarak geliştirdiğim ingilizce kelimeleri öğrenme ve yönetme uygulamasıdır. Bu uygulama, kullanıcılara kelime arama, kayıtlı kelimeleri yönetme ve öğrenme listesi oluşturma imkanı sunar. Ayrıca kelimelere örnek cümleler de eklenebilir. Kullanıcının öğrenme sürecini eğlenceli hale getirebilecek 2 oyun da bulunmaktadır.
+
+## Kullanıcı Arayüzü
+
+Uygulamanın kullanıcı arayüzü aşağıdaki bölümlerden oluşmaktadır:
+
+- **Arama:** Kelimeleri aramak için kullanılan bölüm. Arama sonuçları, kelimenin anlamı, örnek cümleleri ve diğer bilgileri içerir.
+- **Kayıtlı Kelimeler:** Kullanıcının kaydettiği kelimeleri listeler. Kelimeleri düzenleme, silme veya örnek cümle ekleme imkanı sunar.
+- **Oyunlar:** Kullanıcının kaydettiği kelimeler ile alıştırma yapabileceği oyunlar.
+
+## Teknik Detaylar
+
+Uygulama, aşağıdaki teknolojileri kullanarak geliştirilmiştir:
+
+- **Vue.js:** Uygulama arayüzünü oluşturmak için Vue.js kullanılmıştır.
+- **Pinia:** Uygulama state yönetimi için Pinia kullanılmıştır.
+- **vue-router:** Yönlendirmeleri oluşturmak için vue-router kullanılmıştır.
+- **Tailwind:** Stilleri oluşturmak için Tailwind kullanılmıştır.
+- **Supabase:** Veritabanını oluşturmak ve yönetmek için Supabase kullanılmıştır.
+- **Chart.js:** Veri görselleştirme için Chart.js kullanılmıştır.
+- **API:** [Free Dictionary API](https://dictionaryapi.dev/) kelimeler için kullanılmıştır.
+
+## Kurulum
+
+Uygulamayı yerel olarak çalıştırmak için şu adımları takip edin:
+
+1. Supabase hesabı oluşturun ve bir veritabanı oluşturun.
+2. `.env` dosyasını oluşturun ve aşağıdaki değerleri ekleyin:
+
+    ```env
+    VITE_SUPABASE_URL=https://[sizin-supabase-url'iniz]
+    VITE_SUPABASE_KEY=[sizin-supabase-key'iniz]
+    ```
+
+3. `npm install` komutunu çalıştırın.
+4. `npm run serve` komutunu çalıştırın.
+
+Uygulama, [http://localhost:5173](http://localhost:5173) adresinde çalışacaktır.
+
 
 ### Ekran Görüntüleri
-![Ekran Görüntüsü Açıklaması](./public/screenshot/login.png)
-![Ekran Görüntüsü Açıklaması](./public/screenshot/main.png)
-![Ekran Görüntüsü Açıklaması](./public/screenshot/add-word.png)
-![Ekran Görüntüsü Açıklaması](./public/screenshot/details.png)
+#### Auth
+![Ekran Görüntüsü Açıklaması](./public/screenshot/auth.png)
+#### Dashboard Main
+![Ekran Görüntüsü Açıklaması](./public/screenshot/dashboard-1.png)
+#### Dashboard Search
+![Ekran Görüntüsü Açıklaması](./public/screenshot/dashboard-2.png)
+#### Saved Main
+![Ekran Görüntüsü Açıklaması](./public/screenshot/saved-main.png)
+#### Saved Word Details
+![Ekran Görüntüsü Açıklaması](./public/screenshot/saved-details.png)
+#### Saved Word Example
+![Ekran Görüntüsü Açıklaması](./public/screenshot/saved-example.png)
+
+<hr></hr>
+
+### Games
+
+#### Word Jumble Main
+![Ekran Görüntüsü Açıklaması](./public/screenshot/jumble-main.png)
+#### Word Jumble Game
+![Ekran Görüntüsü Açıklaması](./public/screenshot/jumble-game.png)
+#### Word Hunting Main
+![Ekran Görüntüsü Açıklaması](./public/screenshot/hunting-main.png)
+#### Word Hunting Game
+![Ekran Görüntüsü Açıklaması](./public/screenshot/hunting-game.png)
+
+## Lisans
+
+Uygulama, MIT lisansı altında yayınlanmaktadır.
