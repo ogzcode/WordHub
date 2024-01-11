@@ -13,17 +13,12 @@
             </button>
         </template>
         <template #error>
-            <p class="text-orange-500 text-xs mt-1">(Password length must be more than 6)</p>
+            <p class="text-white text-xs mt-1">(Password length must be more than 6)</p>
         </template>
         </Input>
         <div class="text-center">
-            <button class="text-white bg-emerald-500 w-1/2 rounded py-2 hover:bg-emerald-600" type="submit">{{
+            <button class="text-zinc-600 font-bold bg-white w-1/2 rounded py-2 hover:bg-white" type="submit">{{
                 props.submitText }}</button>
-        </div>
-        <div class="text-center text-xs mt-8">
-            <p>
-                <router-link class="text-white" :to="{ name: props.routingName }">{{ props.routingText }}</router-link>
-            </p>
         </div>
     </form>
 </template>
@@ -40,10 +35,6 @@ const emits = defineEmits(["onSubmit"]);
 
 const props = defineProps({
     routingName: {
-        type: String,
-        required: true,
-    },
-    routingText: {
         type: String,
         required: true,
     },
