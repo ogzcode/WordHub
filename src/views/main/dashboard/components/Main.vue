@@ -10,7 +10,7 @@
         </div>
         <div class="rounded-lg w-full flex gap-x-12">
             <div class="lg:w-1/4 w-1/3">
-                <div class="flex px-8 bg-teal-500 items-center rounded-lg h-[10rem] mb-8">
+                <div class="flex px-8 bg-indigo-500 items-center rounded-lg h-[10rem] mb-8">
                     <img :src="dictionary" alt="dictionary" class="w-20 rounded-lg mb-3" />
                     <div class="ml-8">
                         <span class="text-4xl mt-2 text-white font-semibold">{{ totalWord }}</span>

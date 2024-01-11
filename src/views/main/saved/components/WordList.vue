@@ -25,7 +25,6 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue';
 import { useWordStore } from '../../../../store/word';
 
 import AudioBtn from "../../components/AudioBtn.vue";
@@ -34,10 +33,6 @@ import WordFooter from './WordFooter.vue';
 const wordStore = useWordStore();
 
 const emits = defineEmits(["onShowDialog"]);
-
-onMounted(() => {
-    wordStore.fetchAllWords();
-});
 
 const handleDeleteWord = (id) => {
     wordStore.deleteWordById(id);

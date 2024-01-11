@@ -1,10 +1,13 @@
 <template>
     <nav class="w-[360px] bg-white min-h-screen md:relative absolute z-20 border-r border-slate-200" :class="{ 'closed': !show}">
-        <h1 class="text-rose-600 mb-8 h-[72px] flex items-center px-6 text-3xl font-bold border-b border-slate-200">Logo</h1>
+        <h1 class="text-rose-600 mb-8 h-[72px] flex items-center px-6 text-3xl font-bold border-b border-slate-200">
+            <img :src="logo" alt="logo" class="w-[40px] h-[40px] mr-2" />
+            <span>Word <span class="bg-rose-500 text-white rounded-md px-2 pt-1">hub</span></span>
+        </h1>
         <ul class="px-6">
             <Link to="/" label="Dashboard" />
             <Link to="/saved" label="Saved Words" />
-            <Link to="/guessing" label="Guessing Game" />
+            <Link to="/guessing" label="Word Jumble" />
             <Link to="/hunt" label="Word Hunting" />
         </ul>
         <button
@@ -35,6 +38,7 @@
 import { ref } from 'vue';
 import Link from './components/Link.vue';
 import { logout } from '../../services/api/auth';
+import logo from "../../assets/logo.png";
 
 const show = ref(true);
 
@@ -55,7 +59,7 @@ window.addEventListener('resize', () => {
 const handleLogout = () => {
     logout()
         .then((res) => {
-            console.log(res);
+            //console.log(res);
         })
         .catch((err) => {
             console.log(err);
