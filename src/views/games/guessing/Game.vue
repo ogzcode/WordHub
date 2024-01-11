@@ -1,38 +1,35 @@
 <template>
     <div class="bg-white h-screen w-full overflow-y-auto">
         <Header header-title="Word Guessing Game" :search-visible="false" />
-        <div class="grid grid-cols-3 gap-x-8 h-[calc(100vh-72px)] p-8">
-            <FoundedWords :foundWords="foundWords" />
-            <div class="col-span-2 rounded-md">
-                <template v-if="selectedWord">
-                    <ShuffledWord :shuffledWord="shuffledWord" />
-                    <GuessedWord :guess="guess" />
-                    <Keyboard @keyboardKeyClick="handleAdd" />
+        <div class="h-[calc(100vh-72px)] p-16">
+            <template v-if="selectedWord">
+                <div class="bg-sky-500 rounded-xl p-8 h-full">
+                    <GameHeader @startGame="handleStartGame" :score="score" :health="health" />
 
-                    <div class="text-center mt-4 font-semibold tracking-wide transition">
-                        <button @click="guessWord"
-                            class="bg-sky-500 text-white px-16 py-2 mr-6 rounded-md hover:bg-sky-600 duration-300">
-                            Guess
-                        </button>
-                        <button @click="handleStartGame"
-                            class="border border-teal-400 text-teal-700 px-16 py-2 rounded-md hover:border-teal-600">
-                            Next
-                        </button>
+                    <div class="h-full flex flex-col justify-center">
+                        <ShuffledWord :shuffledWord="shuffledWord" />
+                        <GuessedWord :guess="guess" />
+                        <Keyboard @keyboardKeyClick="handleAdd" />
+
+                        <div class="text-center mt-4 font-semibold tracking-wide transition">
+                            <button @click="guessWord" class="bg-white text-sky-500 px-16 py-2 mr-6 rounded-md">
+                                Guess
+                            </button>
+
+                        </div>
                     </div>
-                </template>
-                <template v-else>
-                    <div class="text-center">
-                        <button @click="handleStartGame" v-if="!selectedWord"
-                            class="border border-indigo-400 text-indigo-800 font-semibold transition w-full py-2 rounded-md hover:bg-indigo-400 hover:text-white">
-                            Start Game
-                        </button>
-                    </div>
-                </template>
-            </div>
+                </div>
+            </template>
+            <template v-else>
+                <Start @startGame="handleStartGame" />
+            </template>
         </div>
 
-        <Dialog header-title="Guessing" :show="showDialog" submit-text="Next" :submit-type="dialogType"
-            @submit="handleStartGame" @close="handleDialog(false)" :footer-show="dialogType !== 'danger'">
+        <Dialog header-title="Guessing" :show="showDialog" submit-text="Next" 
+            :submit-type="dialogType"
+            @submit="handleStartGame" :cancel-show="false"
+            @close="dialogType === 'danger' ? handleDialog(false) : () => { }" 
+            :footer-show="dialogType !== 'danger'">
             <template #body>
                 <template v-if="dialogType === 'success'">
                     <div class="flex flex-col justify-center items-center mb-4">
@@ -52,24 +49,29 @@
 </template>
   
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import { useWordStore } from '../../../store/word';
+import { useToastStore } from '../../../store/toast';
 import Header from '../../main/dashboard/components/Header.vue';
-import Keyboard from './Keyboard.vue';
-import FoundedWords from './FoundedWords.vue';
-import ShuffledWord from './ShuffledWord.vue';
-import GuessedWord from './GuessedWord.vue';
+import Keyboard from './components/Keyboard.vue';
+import ShuffledWord from './components/ShuffledWord.vue';
+import GuessedWord from './components/GuessedWord.vue';
 import Dialog from '../../../components/Dialog.vue';
+import Start from "./components/Start.vue"
+import GameHeader from './components/GameHeader.vue';
 
 import success from "../../../assets/success.png";
 import declined from "../../../assets/declined.png";
 
 const wordStore = useWordStore();
+const toastStore = useToastStore();
 
 const shuffledWord = ref("");
 const selectedWord = ref("");
 const guess = ref("");
 const foundWords = ref([]);
+const health = ref(3);
+const score = ref(0);
 
 const showDialog = ref(false);
 const dialogType = ref(null);
@@ -83,6 +85,20 @@ onMounted(() => {
     wordStore.fetchAllWords();
 });
 
+watch(() => health.value, (value) => {
+    if (value === 0) {
+        toastStore.showToast("error", "You lost the game. Game Restart");
+        health.value = 3;
+        score.value = 0;
+        foundWords.value = [];
+        shuffledWord.value = "";
+        selectedWord.value = "";
+        guess.value = "";
+        handleStartGame();
+        handleDialog(false);
+    }
+});
+
 window.addEventListener("keydown", (e) => {
     if (e.key === "Backspace") {
         guess.value = guess.value.slice(0, -1);
@@ -92,8 +108,10 @@ window.addEventListener("keydown", (e) => {
 function guessWord() {
     if (selectedWord.value === guess.value) {
         handleDialog(true, "success");
+        score.value += 10;
     } else {
         handleDialog(true, "danger");
+        health.value -= 1;
     }
 }
 
@@ -114,5 +132,9 @@ const handleAdd = (key) => {
 };
 </script>
   
-<style scoped></style>
+<style scoped>
+.next-btn:hover {
+    transform: scale(.95);
+}
+</style>
   
