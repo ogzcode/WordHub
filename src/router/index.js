@@ -54,11 +54,6 @@ const routes = [
         component: () => import('../views/auth/Login.vue')
     },
     {
-        path: '/signup',
-        name: 'Signup',
-        component: () => import('../views/auth/SignUp.vue')
-    },
-    {
         path: "/:pathMatch(.*)*",
         name: "NotFound",
         redirect: "404",
